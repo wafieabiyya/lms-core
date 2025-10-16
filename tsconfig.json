@@ -10,6 +10,14 @@
     "module": "nodenext",
     "target": "esnext",
     "types": [],
+    "paths": {
+      "@routes/*": ["./src/routes/*"],
+      "@repos/*": ["./src/repo/*"],
+      "@services/*": ["./src/services/*"],
+      "@handlers/*": ["./src/handlers/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@db/*": ["./src/db/*"]
+    },
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
