@@ -47,3 +47,30 @@ export async function logout(req: Request, res: Response) {
     res.status(400).json({ code: "LOGOUT_ERROR", message });
   }
 }
+
+export async function getMe(req: any, res: any) {
+  try {
+    const userId = req.user?.sub as string;
+    if (!userId) {
+      return res
+        .status(401)
+        .json({ code: "UNAUTHORIZED", message: "No user in token" });
+    }
+
+    const data = await svc.me(userId);
+
+    if (!data) {
+      return res
+        .status(404)
+        .json({ code: "NOT_FOUND", message: "User not found" });
+    }
+
+    return res.json(data);
+  } catch (e: any) {
+    console.error("getMe error:", e);
+    return res.status(500).json({
+      code: "ME_ERROR",
+      message: e?.message || "Internal error",
+    });
+  }
+}

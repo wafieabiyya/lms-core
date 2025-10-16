@@ -7,6 +7,7 @@ import {
   storeRefreshToken,
   activeRefreshTokens,
   revokeRefreshToken,
+  findUserByID,
 } from "@repos/auth.repo";
 
 export const RegisterSchema = z.object({
@@ -86,4 +87,10 @@ export async function logout(body: any) {
     }
   }
   return { ok: true };
+}
+
+export async function me(userId: string) {
+  const user = await findUserByID(userId);
+  if (!user) throw new Error("USER_NOT_FOUND");
+  return user;
 }

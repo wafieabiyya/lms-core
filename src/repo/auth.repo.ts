@@ -21,6 +21,7 @@ const rawQuery = {
     WHERE email = $1
     LIMIT 1
   `,
+  getUserByID: `SELECT id, name, email, role, created_at FROM users WHERE id = $1 LIMIT 1`,
   getFuture7dTs: `SELECT (NOW() + interval '7 day')::timestamptz as exp`,
   insertNewRefreshToken: `
     INSERT INTO refresh_tokens (user_id, token_hash, expires_at)
@@ -50,6 +51,11 @@ export async function insertUser(
 
 export async function findUserByEmail(email: string): Promise<DbUser | null> {
   const r = await pool.query<DbUser>(rawQuery.getUserByEmail, [email]);
+  return r.rows[0] || null;
+}
+
+export async function findUserByID(userId: string) {
+  const r = await pool.query<DbUser>(rawQuery.getUserByID, [userId]);
   return r.rows[0] || null;
 }
 

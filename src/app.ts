@@ -12,7 +12,7 @@ export function createApp() {
   app.use("/api/v1/auth", authRouter);
 
   //check health
-  app.get("/health", (res: Response) => {
+  app.get("/health", (_req: Request, res: Response) => {
     res.json({ name: "lms-be", version: "1.0.0", status: "ok" });
   });
 
